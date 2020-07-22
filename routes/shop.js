@@ -11,17 +11,16 @@ router.get('/products', isAuth, shopController.getProducts);
 
 router.post(
     '/add-product',
-    isAuth,
-    // [
-    //     body('title')
-    //     .isString()
-    //     .isLength({ min: 3 })
-    //     .trim(),
-    //     body('price').isFloat(),
-    //     body('description')
-    //     .isLength({ min: 5, max: 400 })
-    //     .trim()
-    // ],
+    isAuth, [
+        body('title')
+        .isString()
+        .isLength({ min: 3 })
+        .trim(),
+        body('price').isFloat(),
+        body('description')
+        .isLength({ min: 5, max: 400 })
+        .trim()
+    ],
     shopController.createProduct
 );
 
