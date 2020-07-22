@@ -29,12 +29,12 @@ module.exports = (req, res, next) => {
             next();
         })
         .catch(err => {
-            next(err => {
+            err => {
                 if (!err.statusCode) {
                     err.statusCode = 500;
                 }
                 next(err);
-            });
+            };
         });
 
 
