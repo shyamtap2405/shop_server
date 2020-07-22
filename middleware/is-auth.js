@@ -26,6 +26,7 @@ module.exports = (req, res, next) => {
     User.findById(req.userId)
         .then(user => {
             req.user = user;
+            next();
         })
         .catch(err => {
             next(err => {
@@ -36,5 +37,5 @@ module.exports = (req, res, next) => {
             });
         });
 
-    next();
+
 };
