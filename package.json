@@ -1,0 +1,30 @@
+{
+    "name": "shop",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "engines": {
+        "node": "12.18.2"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": " nodemon app.js",
+        "start-server": "node app.js"
+    },
+    "author": "shyam",
+    "license": "ISC",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "express-validator": "^6.6.0",
+        "helmet": "^3.23.3",
+        "jsonwebtoken": "^8.5.1",
+        "mongodb": "^3.5.9",
+        "mongoose": "^5.9.25"
+    },
+    "devDependencies": {
+        "nodemon": "^1.18.4"
+    }
+}
