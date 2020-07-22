@@ -25,12 +25,12 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.createProduct = (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        const error = new Error('Validation failed, entered data is incorrect.');
-        error.statusCode = 422;
-        throw error;
-    }
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     const error = new Error('Validation failed, entered data is incorrect.');
+    //     error.statusCode = 422;
+    //     throw error;
+    // }
     const title = req.body.title;
     const imageUrl = req.body.imageUrl;
     const price = req.body.price;
