@@ -66,6 +66,7 @@ exports.toggleFavorite = (req, res, next) => {
 
     Product.findById(prodId)
         .then(product => {
+            product.favorite = isFav;
             User.findById(req.userId)
         })
         .then(user => {
