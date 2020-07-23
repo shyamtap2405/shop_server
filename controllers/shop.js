@@ -15,7 +15,7 @@ exports.getProducts = (req, res, next) => {
 
             res.status(200).json({
 
-                products: [...products]
+                products: products
             });
         }).catch(err => {
             if (!err.statusCode) {
