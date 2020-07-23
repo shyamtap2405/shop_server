@@ -12,9 +12,10 @@ exports.getProducts = (req, res, next) => {
     Product.find()
         .then(products => {
             console.log(products);
+
             res.status(200).json({
-                message: 'Fetched posts successfully.',
-                products: products
+
+                products: [...products]
             });
         }).catch(err => {
             if (!err.statusCode) {
