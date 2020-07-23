@@ -23,11 +23,8 @@ module.exports = (req, res, next) => {
     }
     req.userId = decodedToken.userId;
 
-    User.findById(req.userId)
-        .then(user => {
-            req.user = user;
-            next();
-        });
+    next();
+
 
 
 
