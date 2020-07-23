@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { Double } = require('mongodb');
 
 const Schema = mongoose.Schema;
 
@@ -8,7 +9,7 @@ const productSchema = new Schema({
         required: true
     },
     price: {
-        type: Number,
+        type: Double,
         required: true
     },
     description: {
