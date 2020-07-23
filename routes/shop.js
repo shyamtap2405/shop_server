@@ -24,7 +24,7 @@ router.post(
     shopController.createProduct
 );
 
-router.patch('/userFavorites/:productId', isAuth, shopController.toggleFavorite);
+router.patch('/userFavorites', isAuth, shopController.toggleFavorite);
 
 router.get('/userfav', isAuth, shopController.getFavorite);
 

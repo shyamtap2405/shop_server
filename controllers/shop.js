@@ -4,8 +4,6 @@ const { validationResult } = require('express-validator');
 const User = require('../models/user');
 
 
-const { json } = require('body-parser');
-const { post } = require('../routes/auth');
 
 exports.getProducts = (req, res, next) => {
 
@@ -62,14 +60,10 @@ exports.createProduct = (req, res, next) => {
 
 exports.toggleFavorite = (req, res, next) => {
     const isFav = req.body.isFavorite;
-    const prodId = req.params.productId;
+    const prodId = req.body.productId;
 
     Product.findById(prodId)
         .then(product => {
-            product.favorite = isFav;
-            User.findById(req.userId)
-        })
-        .then(user => {
             return req.user.toggleFavorite(product._id, isFav);
         })
         .then(result => {
@@ -87,9 +81,9 @@ exports.toggleFavorite = (req, res, next) => {
 exports.getFavorite = (req, res, next) => {
 
     const favProds = req.user.favoriteProduct.products;
-    res.status(200).json({
-        favProduct: favProds
-    });
+    res.status(200).json(
+        favProds
+    );
 
 };
 

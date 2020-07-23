@@ -24,10 +24,8 @@ const productSchema = new Schema({
         ref: 'User',
         required: true
     },
-    favorite: {
-        type: Boolean,
-        default: false
-    }
+
+
 });
 
 module.exports = mongoose.model('Product', productSchema);
