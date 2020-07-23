@@ -84,19 +84,12 @@ exports.toggleFavorite = (req, res, next) => {
 };
 
 exports.getFavorite = (req, res, next) => {
-    User.findById(req.userId)
-        .then(user => {
-            const favProds = user.favoriteProduct.products;
-            res.status(200).json({
-                favProduct: products
-            });
-        })
-        .catch(err => {
-            if (!err.statusCode) {
-                err.statusCode = 500;
-            }
-            next(err);
-        });
+
+    const favProds = req.user.favoriteProduct.products;
+    res.status(200).json({
+        favProduct: favProds
+    });
+
 };
 
 exports.updateProduct = (req, res, next) => {
