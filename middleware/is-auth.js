@@ -27,15 +27,8 @@ module.exports = (req, res, next) => {
         .then(user => {
             req.user = user;
             next();
-        })
-        .catch(err => {
-            err => {
-                if (!err.statusCode) {
-                    err.statusCode = 500;
-                }
-                next(err);
-            };
         });
+
 
 
 };
