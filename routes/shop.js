@@ -24,11 +24,11 @@ router.post(
     shopController.createProduct
 );
 
-router.patch('/userFavorites:productId', isAuth, shopController.toggleFavorite);
+router.patch('/userFavorites/:productId', isAuth, shopController.toggleFavorite);
 
 router.get('/userfav', isAuth, shopController.getFavorite);
 
-router.patch('/updateProduct:productId',
+router.patch('/updateProduct/:productId',
     isAuth,
     //  [
     //     body('title')
