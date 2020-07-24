@@ -148,20 +148,23 @@ exports.deleteProduct = (req, res, next) => {
                 error.statusCode = 403;
                 throw error;
             }
-            return Product.findByIdAndRemove(prodId);
+            Product.findByIdAndRemove(prodId)
+                .exec(function(err, removed) {
+                    User.findOneAndUpdate({ _id: req.userId }, { $pull: { cart: { items: { _id: id } } } }, )
+                })
         })
-        .then(result => {
-            return User.find();
-        }).then(users => {
-            const user = [...users];
-            user.forEach(us => {
-                us.cart.items.findByIdAndRemove(prodId);
-                us.favoriteProduct.products.pull(prodId);
-                us.save()
-            });
+        // .then(result => {
+        //     return User.find();
+        // }).then(users => {
+        //     const user = [...users];
+        //     user.forEach(us => {
+        //         us.cart.items.findByIdAndRemove(prodId);
+        //         us.favoriteProduct.products.pull(prodId);
+        //         us.save()
+        //     });
 
-        })
-        .then(result => {
+    // })
+    .then(result => {
             res.status(200).json({ message: 'product deleted succesfully' });
         })
         .catch(err => {
