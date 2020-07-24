@@ -43,6 +43,6 @@ router.patch('/updateProduct/:productId',
 
 router.get('/admin/products', isAuth, shopController.getAdminProducts);
 
-router.delete('/product/:productId', isAuth, shopController.deleteProduct);
+router.post('/product/:productId', isAuth, shopController.deleteProduct);
 
 module.exports = router;
