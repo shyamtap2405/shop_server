@@ -2,6 +2,7 @@ const Product = require('../models/product');
 const Order = require('../models/order');
 const { validationResult } = require('express-validator');
 const User = require('../models/user');
+const product = require('../models/product');
 
 
 
@@ -148,19 +149,21 @@ exports.deleteProduct = (req, res, next) => {
                 error.statusCode = 403;
                 throw error;
             }
-            return Product.findByIdAndRemove(prodId);
-        })
-        .then(result => {
             return User.find();
-        }).then(users => {
+        })
+        .then(users => {
             const user = [...users];
             user.forEach(us => {
                 us.cart.items.findByIdAndRemove(prodId);
                 us.favoriteProduct.products.pull(prodId);
-                us.save();
-            });
 
-        })
+            });
+            user.save();
+        }).then(result => {
+                Product.findByIdAndRemove(prodId)
+            }
+
+        )
         .then(result => {
             res.status(200).json({ message: 'product deleted succesfully' });
         })
