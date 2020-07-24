@@ -11,36 +11,34 @@ router.get('/products', isAuth, shopController.getProducts);
 
 router.post(
     '/add-product',
-    isAuth,
-    // [
-    //     body('title')
-    //     .isString()
-    //     .isLength({ min: 3 })
-    //     .trim(),
-    //     body('price').isFloat(),
-    //     body('description')
-    //     .isLength({ min: 5, max: 400 })
-    //     .trim()
-    // ],
+    isAuth, [
+        body('title')
+        .isString()
+        .isLength({ min: 3 })
+        .trim(),
+
+        body('description')
+        .isLength({ min: 5, max: 400 })
+        .trim()
+    ],
     shopController.createProduct
 );
 
 router.patch('/userFavorites', isAuth, shopController.toggleFavorite);
 
-router.get('/userfav', isAuth, shopController.getFavorite);
+//router.get('/userfav', isAuth, shopController.getFavorite);
 
 router.patch('/updateProduct/:productId',
-    isAuth,
-    //  [
-    //     body('title')
-    //     .isString()
-    //     .isLength({ min: 3 })
-    //     .trim(),
-    //     body('price').isFloat(),
-    //     body('description')
-    //     .isLength({ min: 5, max: 400 })
-    //     .trim()
-    // ],
+    isAuth, [
+        body('title')
+        .isString()
+        .isLength({ min: 3 })
+        .trim(),
+
+        body('description')
+        .isLength({ min: 5, max: 400 })
+        .trim()
+    ],
     shopController.updateProduct);
 
 router.get('/admin/products', isAuth, shopController.getAdminProducts);

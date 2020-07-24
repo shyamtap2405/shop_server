@@ -80,7 +80,7 @@ exports.toggleFavorite = (req, res, next) => {
 
 exports.getFavorite = (req, res, next) => {
 
-    const favProds = req.user.favoriteProduct.products;
+    const favProds = req.user.favoriteProduct;
     res.status(200).json(
         favProds
     );

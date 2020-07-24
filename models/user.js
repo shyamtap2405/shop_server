@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { createProduct } = require('../controllers/shop');
+
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
