@@ -36,20 +36,21 @@ exports.postCart = (req, res, next) => {
         .then(result => {
             var query = new Query()
             const cart = query.select(result.cart.items)['_fields'];
-            const addedItem = cart.map(item => {
-                    if (item.product._id === prodId) {
-                        return {
-                            cartId: item._id,
-                            product: item.product,
-                            quantity: item.quantity
-                        };
-                    }
-                })
-                // cart.get(prodId)
+            // const addedItem = cart.array.forEach(element => {
+
+            //     if (item.product._id === prodId) {
+            //         return {
+            //             cartId: item._id,
+            //             product: item.product,
+            //             quantity: item.quantity
+            //         };
+            //     }
+            // });
+            // cart.get(prodId)
 
             res.status(201).json({
                 message: 'cart product added successfully',
-                cart: addedItem
+                cart: cart
             });
         })
         .catch(err => {
