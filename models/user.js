@@ -79,9 +79,9 @@ userSchema.methods.addToCart = function(product) {
     return this.save();
 };
 
-userSchema.methods.removeSingleItem = function(product) {
+userSchema.methods.removeSingleItem = function(id) {
     const cartProductIndex = this.cart.items.findIndex(cp => {
-        return cp.product._id.toString() === product._id.toString();
+        return cp._id.toString() === id.toString();
     });
 
     const updatedCartItems = [...this.cart.items];
@@ -92,13 +92,10 @@ userSchema.methods.removeSingleItem = function(product) {
         newQuantity = updatedCartItems[cartProductIndex].quantity - 1;
     } else {
         updatedCartItems = this.cart.items.filter(item => {
-            return item.product._id.toString() !== productId.toString();
+            return item._id.toString() !== id.toString();
         });
     }
-    const updatedCart = {
-        items: updatedCartItems
-    };
-    this.cart = updatedCart;
+    this.cart.items = updatedCartItems;
     return this.save();
 };
 

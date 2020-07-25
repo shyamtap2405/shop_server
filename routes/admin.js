@@ -15,6 +15,6 @@ router.post('/order', isAuth, adminController.postOrder);
 
 router.get('/orderItem', isAuth, adminController.getOrders);
 
-router.delete('/singleCartItem/:id', isAuth, adminController.deleteSingleCartItem);
+router.post('/singleCartItem', isAuth, adminController.deleteSingleCartItem);
 
 module.exports = router;

@@ -74,7 +74,7 @@ exports.postCart = (req, res, next) => {
 exports.deleteCartItem = (req, res, next) => {
     const cartId = req.body.cartId;
     User.findById(req.userId).then(user => {
-            req.user.removeFromCart(cartId)
+            return req.user.removeFromCart(cartId)
         })
         .then(result => {
             res.status(201).json({
@@ -91,26 +91,32 @@ exports.deleteCartItem = (req, res, next) => {
 };
 
 exports.postOrder = (req, res, next) => {
-    const products = req.user.cart.items;
-    let total = 0;
-    products.forEach(p => {
-        total += p.quantity * p.price;
-    });
-    const order = new Order({
-        user: {
-            email: req.user.email,
-            userId: req.userId
-        },
-        products: products,
-        amount: total
-    });
-    return order.save()
+    User.findById(req.userId).then(user1 => {
+            const products = user1.cart.items;
+            var total = 0;
+
+
+            const order = new Order({
+                user: {
+                    email: user1.email,
+                    userId: req.userId
+                },
+                products: products,
+                //amount: total
+            });
+            return order.save()
+        })
         .then(result => {
-            const order = result;
-            return req.user.clearCart();
-        }).then(() => {
+            let totalPrice = 0;
+            result.products.forEach(prod => {
+                totalPrice += prod.quantity * prod.product.price;
+            });
+            // const order = result;
+            req.user.clearCart();
+
             res.status(201).json({
-                order: order,
+                order: result,
+                totalSum: totalPrice,
                 message: 'order placed successfully'
             });
         })
@@ -140,15 +146,14 @@ exports.getOrders = (req, res, next) => {
 };
 
 exports.deleteSingleCartItem = (req, res, next) => {
-    const prodId = req.params.productId;
-    Product.findById(prodId)
-        .then(product => {
-            return req.user.removeSingleItem(product);
+    const cartId = req.body.cartId;
+    User.findById(req.userId).then(user => {
+            return user.removeSingleItem(cartId)
         })
         .then(result => {
             res.status(201).json({
                 message: ' single item removed successfully',
-                result: result
+
             });
         })
         .catch(err => {
