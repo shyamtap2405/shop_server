@@ -3,6 +3,7 @@ const Order = require('../models/order');
 const User = require('../models/user');
 const product = require('../models/product');
 const { json } = require('body-parser');
+const { Query } = require('mongoose');
 
 
 exports.getCart = (req, res, next) => {
@@ -29,12 +30,26 @@ exports.postCart = (req, res, next) => {
     const prodId = req.body.productId;
     Product.findById(prodId)
         .then(product => {
+            const prod = product
             return req.user.addToCart(product);
         })
         .then(result => {
+            var query = new Query()
+            const cart = query.select(result.cart.items)['_fields'];
+            const addedItem = cart.map(item => {
+                    if (item.product._id === prodId) {
+                        return {
+                            cartId: item._id,
+                            product: item.product,
+                            quantity: item.quantity
+                        };
+                    }
+                })
+                // cart.get(prodId)
+
             res.status(201).json({
                 message: 'cart product added successfully',
-                cart: result.cart.items
+                cart: addedItem
             });
         })
         .catch(err => {
