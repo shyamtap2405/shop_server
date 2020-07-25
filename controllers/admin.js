@@ -34,8 +34,17 @@ exports.postCart = (req, res, next) => {
             return req.user.addToCart(product);
         })
         .then(result => {
-            var query = new Query()
-            const cart = query.select(result.cart.items)['_fields'];
+            const products = req.user.cart.items.map(item => {
+
+                return { quantity: item.quantity, product: item.product, cartId: item._id };
+            });
+            // const added = products.forEach(element => {
+            //     if (element.product._id === prodId) {
+            //         return element;
+            //     }
+            // });
+            // var query = new Query()
+            // const cart = query.select(result.cart.items)['_fields'];
             // const addedItem = cart.array.forEach(element => {
 
             //     if (item.product._id === prodId) {
@@ -50,7 +59,7 @@ exports.postCart = (req, res, next) => {
 
             res.status(201).json({
                 message: 'cart product added successfully',
-                cart: cart
+                cart: products
             });
         })
         .catch(err => {
