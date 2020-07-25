@@ -72,7 +72,7 @@ exports.postCart = (req, res, next) => {
 };
 
 exports.deleteCartItem = (req, res, next) => {
-    const prodId = req.body.productId;
+    const prodId = req.params.productId;
     req.user.removeFromCart(prodId)
         .then(result => {
             res.status(201).json({
@@ -138,7 +138,7 @@ exports.getOrders = (req, res, next) => {
 };
 
 exports.deleteSingleCartItem = (req, res, next) => {
-    const prodId = req.body.productId;
+    const prodId = req.params.productId;
     Product.findById(prodId)
         .then(product => {
             return req.user.removeSingleItem(product);
