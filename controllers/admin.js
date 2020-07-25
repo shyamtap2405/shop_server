@@ -72,8 +72,10 @@ exports.postCart = (req, res, next) => {
 };
 
 exports.deleteCartItem = (req, res, next) => {
-    const prodId = req.body.productId;
-    req.user.removeFromCart(prodId)
+    const cartId = req.body.cartId;
+    User.findById(req.userId).then(user => {
+            req.user.removeFromCart(cartId)
+        })
         .then(result => {
             res.status(201).json({
                 message: 'item deleted successfully'

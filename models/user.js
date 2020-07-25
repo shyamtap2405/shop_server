@@ -102,9 +102,9 @@ userSchema.methods.removeSingleItem = function(product) {
     return this.save();
 };
 
-userSchema.methods.removeFromCart = function(productId) {
+userSchema.methods.removeFromCart = function(id) {
     const updatedCartItems = this.cart.items.filter(item => {
-        return item.product._id.toString() !== productId.toString();
+        return item._id.toString() !== id.toString();
     });
     this.cart.items = updatedCartItems;
     return this.save();
