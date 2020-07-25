@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 
 const orderSchema = new Schema({
-    // amount: { type: Number, required: true },
+    amount: { type: Number, required: true },
     products: [{
         product: { type: Object, ref: 'Product', required: true },
         quantity: { type: Number, required: true }

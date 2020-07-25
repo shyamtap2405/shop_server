@@ -94,7 +94,10 @@ exports.postOrder = (req, res, next) => {
     User.findById(req.userId).then(user1 => {
             const products = user1.cart.items;
             var total = 0;
-
+            let totalPrice = 0;
+            products.forEach(prod => {
+                totalPrice += parseInt(prod.quantity * prod.product.price) || 0;
+            });
 
             const order = new Order({
                 user: {
@@ -102,7 +105,7 @@ exports.postOrder = (req, res, next) => {
                     userId: req.userId
                 },
                 products: products,
-                //amount: total
+                amount: totalPrice
             });
             return order.save()
         })
@@ -116,7 +119,7 @@ exports.postOrder = (req, res, next) => {
 
             res.status(201).json({
                 order: result,
-                totalSum: totalPrice,
+                // totalSum: totalPrice,
                 message: 'order placed successfully'
             });
         })
