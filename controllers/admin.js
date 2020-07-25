@@ -72,7 +72,7 @@ exports.postCart = (req, res, next) => {
 };
 
 exports.deleteCartItem = (req, res, next) => {
-    const prodId = req.params.productId;
+    const prodId = req.body.productId;
     req.user.removeFromCart(prodId)
         .then(result => {
             res.status(201).json({
