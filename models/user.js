@@ -39,7 +39,7 @@ userSchema.methods.toggleFavorite = function(productId, isFav) {
     });
     const favProducts = [...this.favoriteProduct.products];
     if (favProdIndex >= 0) {
-        this.favProducts[favProdIndex].isFavorite = isFav;
+        favProducts[favProdIndex].isFavorite = isFav;
     } else {
         favProducts.push({
             productId: productId,

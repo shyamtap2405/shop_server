@@ -61,10 +61,9 @@ exports.createProduct = (req, res, next) => {
 exports.toggleFavorite = (req, res, next) => {
     const isFav = req.body.isFavorite;
     const prodId = req.body.productId;
-
-    Product.findById(prodId)
-        .then(product => {
-            return req.user.toggleFavorite(product._id, isFav);
+    User.findById(req.userId)
+        .then(user => {
+            return user.toggleFavorite(prodId, isFav)
         })
         .then(result => {
             res.status(201).json({ message: 'fav status updated successfully' });
@@ -79,11 +78,24 @@ exports.toggleFavorite = (req, res, next) => {
 };
 
 exports.getFavorite = (req, res, next) => {
+    User.findById(req.userId)
+        .then(user => {
+            favProds = user.favoriteProduct
+            res.status(200).json(
+                favProds
+            );
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
 
-    const favProds = req.user.favoriteProduct;
-    res.status(200).json(
-        favProds
-    );
+    // const favProds = req.user.favoriteProduct;
+    // res.status(200).json(
+    //     favProds
+    // );
 
 };
 
