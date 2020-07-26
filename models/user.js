@@ -86,16 +86,18 @@ userSchema.methods.removeSingleItem = function(id) {
 
     const updatedCartItems = [...this.cart.items];
 
-    let newQuantity = 0;
+
 
     if (updatedCartItems[cartProductIndex].quantity > 1) {
-        newQuantity = updatedCartItems[cartProductIndex].quantity - 1;
-    } else {
-        updatedCartItems = this.cart.items.filter(item => {
+        updatedCartItems[cartProductIndex].quantity = updatedCartItems[cartProductIndex].quantity - 1;
+        this.cart.items = updatedCartItems;
+    } else if (updatedCartItems[cartProductIndex].quantity === 1) {
+        const updatedCartItems1 = this.cart.items.filter(item => {
             return item._id.toString() !== id.toString();
         });
+        this.cart.items = updatedCartItems1;
     }
-    this.cart.items = updatedCartItems;
+
     return this.save();
 };
 
